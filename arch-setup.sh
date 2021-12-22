@@ -44,7 +44,7 @@ mount /dev/sda1 /mnt/boot/efi
 
 pacstrap /mnt base linux linux-firmware grub dosfstools efibootmgr sudo
 pacstrap /mnt base-devel git go
-pacstrap /mnt nano openssh networkmanager dnsutils openssh zsh grml-zsh-config
+pacstrap /mnt nano openssh networkmanager dnsutils polkit openssh zsh grml-zsh-config
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
