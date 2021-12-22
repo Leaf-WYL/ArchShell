@@ -6,16 +6,17 @@ LOG=/arch-setup_$(date +%Y%m%d-%H%M%S).log
 ### preset #####################################
 ################################################
 
-echo "rootのパスワードを設定します"
+echo "Input for root password"
 read ROOTPASS
 
-echo "一般のユーザーを作成します"
+echo "Create User"
+echo "Input for User Name"
 read CREATEUSER
 
-echo "ユーザーのpasswordを設定します"
+echo "Input for User Password"
 read USERPASS
 
-echo "ホスト名を設定します"
+echo "Input for Hostname"
 read MACHINENAME
 
 ################################################
