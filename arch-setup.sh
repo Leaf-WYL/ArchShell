@@ -5,6 +5,9 @@ LOG=/arch-setup_$(date +%Y%m%d-%H%M%S).log
 
 ### preset #####################################
 ################################################
+lsblk
+echo "Select To Install Disk For Arch Linux"
+read INSTAKKDEV
 
 echo "Input for root password"
 read ROOTPASS
@@ -26,22 +29,22 @@ read MACHINENAME
 ### Device Settings ############################
 ################################################
 
-sgdisk -n "0::+512M" -t 0:ef00 /dev/sda
-sgdisk -n "0::+512M" -t 0:ef02 /dev/sda
-sgdisk -n "0::-2G"  /dev/sda
-sgdisk -n "0::" -t 0:8200 /dev/sda
+sgdisk -n "0::+512M" -t 0:ef00 ${INSTAKKDEV}
+sgdisk -n "0::+512M" -t 0:ef02 ${INSTAKKDEV}
+sgdisk -n "0::-2G"  ${INSTAKKDEV}
+sgdisk -n "0::" -t 0:8200 ${INSTAKKDEV}
 
-mkfs.vfat -F32 /dev/sda1
-echo y | mkfs.ext4 /dev/sda2
-echo y | mkfs.ext4 /dev/sda3
-mkswap /dev/sda4
-swapon /dev/sda4
+mkfs.vfat -F32 ${INSTAKKDEV}1
+echo y | mkfs.ext4 ${INSTAKKDEV}2
+echo y | mkfs.ext4 ${INSTAKKDEV}3
+mkswap ${INSTAKKDEV}4
+swapon ${INSTAKKDEV}4
 
-mount /dev/sda3 /mnt
+mount ${INSTAKKDEV}3 /mnt
 mkdir /mnt/boot
-mount /dev/sda2 /mnt/boot
+mount ${INSTAKKDEV}2 /mnt/boot
 mkdir /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
+mount ${INSTAKKDEV}1 /mnt/boot/efi
 
 pacstrap /mnt base linux linux-firmware grub dosfstools efibootmgr sudo
 pacstrap /mnt base-devel git go
