@@ -5,7 +5,7 @@ LOG=/arch-setup_$(date +%Y%m%d-%H%M%S).log
 
 ### preset #####################################
 ################################################
-lsblk
+fdisk -l | grep "Disk /dev/"
 echo "Select To Install Disk For Arch Linux"
 read INSTAKKDEV
 
