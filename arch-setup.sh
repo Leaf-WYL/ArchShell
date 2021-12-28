@@ -79,7 +79,7 @@ echo ${MACHINENAME} >> /etc/hostname
 cat - << EOB >> /etc/hosts
 127.0.0.1 localhost
 ::1 localhost
-127.0.0.1 ${MACHINENAME}.home ${MACHINENAME}
+127.0.1.1 ${MACHINENAME}.home ${MACHINENAME}
 EOB
 systemctl enable NetworkManager
 systemctl enable sshd
