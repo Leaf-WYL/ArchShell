@@ -5,6 +5,7 @@ LOG=/arch-setup_$(date +%Y%m%d-%H%M%S).log
 
 ### preset #####################################
 ################################################
+
 fdisk -l | grep "Disk /dev/"
 echo -n "Select To Install Disk For Arch Linux >> "
 read INSTAKKDEV
@@ -54,8 +55,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 #### Arch chroot ###############################
 ################################################
+
 arch-chroot /mnt << EOA
+
 ### Config Settings ############################
+
 echo exec arch-chroot
 echo KEYMAP=jp106 >> /etc/vconsole.conf
 sed -i 's/#\(en_US.UTF-8\)/\1/g' /etc/locale.gen
@@ -81,8 +85,11 @@ systemctl enable NetworkManager
 systemctl enable sshd
 pacman -Syu
 chsh -s $(which zsh)
+
 ################################################
+
 ### yay install ################################
+
 mkdir /aur-dir/
 cd /aur-dir
 git clone https://aur.archlinux.org/yay.git
@@ -91,9 +98,10 @@ chmod -R 777 /aur-dir/
 su ${CREATEUSER} -c 'makepkg -s'
 echo Y | pacman -U \$(ls /aur-dir/yay | grep pkg.tar)
 rm -rf /aur-dir; cd /
-################################################
-EOA
 
+################################################
+
+EOA
 
 ################################################
 ################################################
