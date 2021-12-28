@@ -6,20 +6,20 @@ LOG=/arch-setup_$(date +%Y%m%d-%H%M%S).log
 ### preset #####################################
 ################################################
 fdisk -l | grep "Disk /dev/"
-echo "Select To Install Disk For Arch Linux"
+echo -n "Select To Install Disk For Arch Linux >> "
 read INSTAKKDEV
 
-echo "Input for root password"
+echo -n "Input for root password >> "
 read ROOTPASS
 
-echo "Create User"
-echo "Input for User Name"
+echo "\nCreate User\n"
+echo "Input for User Name >> "
 read CREATEUSER
 
-echo "Input for User Password"
+echo -n "Input for User Password >> "
 read USERPASS
 
-echo "Input for Hostname"
+echo -n "Input for Hostname >> "
 read MACHINENAME
 
 ################################################
@@ -29,22 +29,18 @@ read MACHINENAME
 ### Device Settings ############################
 ################################################
 
-sgdisk -n "0::+512M" -t 0:ef00 ${INSTAKKDEV}
-sgdisk -n "0::+512M" -t 0:ef02 ${INSTAKKDEV}
-sgdisk -n "0::-2G"  ${INSTAKKDEV}
-sgdisk -n "0::" -t 0:8200 ${INSTAKKDEV}
+sgdisk -n "0::+512M" -t 0:ef00 /dev/${INSTAKKDEV}
+sgdisk -n "0::-2G"  /dev/${INSTAKKDEV}
+sgdisk -n "0::" -t 0:8200 /dev/${INSTAKKDEV}
 
-mkfs.vfat -F32 ${INSTAKKDEV}1
-echo y | mkfs.ext4 ${INSTAKKDEV}2
-echo y | mkfs.ext4 ${INSTAKKDEV}3
-mkswap ${INSTAKKDEV}4
-swapon ${INSTAKKDEV}4
+mkfs.vfat -F32 /dev/${INSTAKKDEV}1
+echo y | mkfs.ext4 /dev/${INSTAKKDEV}2
+mkswap /dev/${INSTAKKDEV}3
+swapon /dev/${INSTAKKDEV}3
 
-mount ${INSTAKKDEV}3 /mnt
+mount /dev/${INSTAKKDEV}2 /mnt
 mkdir /mnt/boot
-mount ${INSTAKKDEV}2 /mnt/boot
-mkdir /mnt/boot/efi
-mount ${INSTAKKDEV}1 /mnt/boot/efi
+mount /dev/${INSTAKKDEV}1 /mnt/boot
 
 pacstrap /mnt base linux linux-firmware grub dosfstools efibootmgr sudo
 pacstrap /mnt base-devel git go
@@ -59,10 +55,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 #### Arch chroot ###############################
 ################################################
 arch-chroot /mnt << EOA
-
-
 ### Config Settings ############################
-
 echo exec arch-chroot
 echo KEYMAP=jp106 >> /etc/vconsole.conf
 sed -i 's/#\(en_US.UTF-8\)/\1/g' /etc/locale.gen
@@ -72,8 +65,8 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 hwclock –systohc –utc
 mkinitcpio -p linux
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch --boot-directory=/boot/efi/EFI --recheck --debug
-grub-mkconfig -o /boot/efi/EFI/grub/grub.cfg
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch --boot-directory=/boot/EFI --recheck --debug
+grub-mkconfig -o /boot/grub/grub.cfg
 yes ${ROOTPASS} | passwd
 useradd -m $CREATEUSER -G wheel
 yes ${USERPASS} | passwd $CREATEUSER
@@ -89,10 +82,7 @@ systemctl enable sshd
 pacman -Syu
 chsh -s $(which zsh)
 ################################################
-
-
 ### yay install ################################
-
 mkdir /aur-dir/
 cd /aur-dir
 git clone https://aur.archlinux.org/yay.git
@@ -101,9 +91,7 @@ chmod -R 777 /aur-dir/
 su ${CREATEUSER} -c 'makepkg -s'
 echo Y | pacman -U \$(ls /aur-dir/yay | grep pkg.tar)
 rm -rf /aur-dir; cd /
-
 ################################################
-
 EOA
 
 
