@@ -3,9 +3,10 @@
 ### sudoを使いすぎて気持ち悪いので、案が思いついたら更新予定 ###
 
 KMSCONFIG=$(cat << EOA
+<?xml version="1.0"?>
+
 <!-- source：https://wiki.archlinux.jp/index.php/KMSCON -->
 
-<?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
 <match>
