@@ -20,7 +20,7 @@ KMSCONFIG=$(cat << EOA
 EOA
 )
 
-echo ${KMSCONFIG} | sudo tee　-a /etc/fonts/conf.d/99-kmscon.conf
+echo -e ${KMSCONFIG} | sudo tee -a /etc/fonts/conf.d/99-kmscon.conf
 yes Y | sudo pacman -Syu kmscon otf-ipafont ttf-dejavu
 sudo systemctl disable getty@tty1.service
 sudo systemctl enable kmsconvt@tty1.service
