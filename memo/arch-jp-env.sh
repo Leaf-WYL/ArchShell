@@ -3,19 +3,19 @@
 ### sudoを使いすぎて気持ち悪いので、案が思いついたら更新予定 ###
 
 KMSCONFIG=$(cat << EOA
-<?xml version="1.0"?>
-
-<!-- source：https://wiki.archlinux.jp/index.php/KMSCON -->
-
-<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-<fontconfig>
-<match>
-        <test name="family"><string>monospace</string></test>
-        <edit name="family" mode="prepend" binding="strong">
-                <string>DejaVu Sans Mono</string>
-                <string>IPAGothic</string>
-        </edit>
-</match>
+<?xml version="1.0"?>\n
+\n
+<!-- source：https://wiki.archlinux.jp/index.php/KMSCON -->\n
+\n
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n
+<fontconfig>\n
+<match>\n\t
+        <test name="family"><string>monospace</string></test>\n\t
+        <edit name="family" mode="prepend" binding="strong">\n\t\t
+                <string>DejaVu Sans Mono</string>\n\t\t
+                <string>IPAGothic</string>\n\t
+        </edit>\n
+</match>\n
 </fontconfig>
 EOA
 )
