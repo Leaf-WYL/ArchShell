@@ -52,7 +52,8 @@ mount /dev/arch/root /mnt
 mkdir /mnt/boot
 mount /dev/${INSTAKKDEV}1 /mnt/boot
 
-pacman -Syu
+yes | pacman -Sy
+yes | pacman -S archlinux-keyring
 
 pacstrap /mnt base linux linux-firmware grub dosfstools efibootmgr sudo lvm2
 pacstrap /mnt base-devel git go
