@@ -91,7 +91,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 yes ${ROOTPASS} | passwd
 useradd -m $CREATEUSER -G wheel
 yes ${USERPASS} | passwd $CREATEUSER
-sed -i 's/# \(%wheel ALL=(ALL) ALL\)/\1/g' /etc/sudoers
+sed -i 's/# \(%wheel ALL=(ALL:ALL) ALL\)/\1/g' /etc/sudoers
 echo ${MACHINENAME} >> /etc/hostname
 cat - << EOB >> /etc/hosts
 127.0.0.1 localhost
