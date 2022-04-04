@@ -52,6 +52,8 @@ mount /dev/arch/root /mnt
 mkdir /mnt/boot
 mount /dev/${INSTAKKDEV}1 /mnt/boot
 
+pacman -Syu
+
 pacstrap /mnt base linux linux-firmware grub dosfstools efibootmgr sudo lvm2
 pacstrap /mnt base-devel git go
 pacstrap /mnt nano openssh networkmanager dnsutils polkit openssh zsh grml-zsh-config
